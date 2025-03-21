@@ -1,5 +1,6 @@
 package joel.thierry.booknest.controller;
 
+import joel.thierry.booknest.model.Book;
 import joel.thierry.booknest.service.AuthorService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/author")
+@RequestMapping("library/author")
 public class AuthorController {
     private AuthorService authorService;
 
@@ -23,5 +24,10 @@ public class AuthorController {
         List<String> authors = new ArrayList<>();
         authors = authorService.getAuthors(name);
         return authors;
+    }
+
+    @GetMapping("/{author}/books")
+    public List<Book> getBooksByAuthor(@PathVariable String author) {
+        return authorService.getBooksByAuthor(author);
     }
 }

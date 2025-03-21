@@ -1,24 +1,20 @@
 package joel.thierry.booknest.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 //unfortunately lombok doesnt work
-public class BookSearchResponse {
+public class BookPagination {
     private int totalResults;
     private List<Book> books;
 
 
     // ✅ Add a constructor that matches the call in BookController
-    public BookSearchResponse(List<Book> books, int totalResults) {
+    public BookPagination(List<Book> books, int totalResults) {
         this.books = books;
         this.totalResults = totalResults;
     }
 
     // ✅ No-arg constructor (needed for frameworks like Jackson)
-    public BookSearchResponse() {
+    public BookPagination() {
     }
 
     // ✅ Getters and setters
