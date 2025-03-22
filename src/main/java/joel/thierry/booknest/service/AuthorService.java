@@ -37,7 +37,7 @@ public class AuthorService {
         return webClient.get()
                 .uri(authorURL)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(String.class)//this prepares an empty container to be filled later
                 .map(response -> this.extractBooksFromAuthor(response,author))
                 .block();
     }

@@ -1,20 +1,17 @@
 package joel.thierry.booknest.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@AllArgsConstructor
 @Getter
-@Document(collation = "users")
+@Setter
+@Document(collection = "users")
 public class User {
     @Id
     private String id;
@@ -23,4 +20,13 @@ public class User {
 
     private List<String> favoriteBook = new ArrayList<>();
     private List<String> favoriteAuthor = new ArrayList<>();
+
+    public User() {}
+    public User(String username, String password, List<String> favoriteBook, List<String> favoriteAuthor) {
+        this.username = username;
+        this.password = password;
+        this.favoriteBook = favoriteBook;
+        this.favoriteAuthor = favoriteAuthor;
+    }
+
 }
