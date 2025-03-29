@@ -1,65 +1,33 @@
 package joel.thierry.booknest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+import java.awt.*;
 import java.util.List;
 
-@NoArgsConstructor   // ✅ Generates a no-args constructor (important for JSON)
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-//unfortunately lombok doesnt work
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
     private String id;
-    private String title;
-    private List<String> authors;
-    private String description;
-    private int pageCount;
-    private double averageRating;
-    private String thumbnail;
-    private String language;
+    private VolumeInfo volumeInfo;
 
-    // ✅ Manually add constructor for debugging (if Lombok is not working)
-    public Book(String id, String title, List<String> authors, String description,
-                int pageCount, double averageRating, String thumbnail, String language) {
-        this.id = id;
-        this.title = title;
-        this.authors = authors;
-        this.description = description;
-        this.pageCount = pageCount;
-        this.averageRating = averageRating;
-        this.thumbnail = thumbnail;
-        this.language = language;
-    }
-    public String getId() {
-        return id;
+    @Data
+    public static class VolumeInfo {
+        private String title;
+        private List<String> authors;
+        private String description;
+        private int pageCount;
+        private double averageRating;
+        private ImageLinks imageLinks;
+        private String language;
     }
 
-    public String getTitle() {
-        return title;
+    @Data
+    public static class ImageLinks {
+        private String thumbnail;
     }
-
-    public List<String> getAuthors() {
-        return authors;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getPageCount() {
-        return pageCount;
-    }
-
-    public double getAverageRating() {
-        return averageRating;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
 
 }

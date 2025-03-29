@@ -1,5 +1,6 @@
 package joel.thierry.booknest.controller;
 
+import joel.thierry.booknest.dto.BookDTO;
 import joel.thierry.booknest.model.Book;
 import joel.thierry.booknest.service.AuthorService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{author}/books")
-    public List<Book> getBooksByAuthor(@PathVariable String author) {
+    public List<BookDTO> getBooksByAuthor(@PathVariable String author) {
         return authorService.getBooksByAuthor(author);
     }
 }

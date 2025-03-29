@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Document(collection = "users")
@@ -21,12 +22,7 @@ public class User {
     private List<String> favoriteBook = new ArrayList<>();
     private List<String> favoriteAuthor = new ArrayList<>();
 
-    public User() {}
-    public User(String username, String password, List<String> favoriteBook, List<String> favoriteAuthor) {
-        this.username = username;
-        this.password = password;
-        this.favoriteBook = favoriteBook;
-        this.favoriteAuthor = favoriteAuthor;
-    }
+
+
 
 }

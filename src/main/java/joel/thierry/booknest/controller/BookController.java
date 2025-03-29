@@ -1,5 +1,6 @@
 package joel.thierry.booknest.controller;
 
+import joel.thierry.booknest.dto.BookDTO;
 import joel.thierry.booknest.model.Book;
 import joel.thierry.booknest.model.BookPagination;
 import joel.thierry.booknest.service.BookService;
@@ -16,11 +17,11 @@ public class BookController {
         this.bookService = bookService; //dependency injection
     }
 
+
     @GetMapping("/{title}")
     public BookPagination searchBooks(@PathVariable String title) {
 
-        List<Book> books = bookService.getBooksByTitle(title);
-        return new BookPagination(books, books.size());
+        List<BookDTO> books = bookService.getBooksByTitle(title);
+        return new BookPagination(books.size(), books);
     }
-
 }
