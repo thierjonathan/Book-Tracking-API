@@ -26,7 +26,6 @@ public class AuthorService {
         this.jacksonObjectMapper = jacksonObjectMapper;
     }
 
-
     public List<String> getAuthors(String author) {
         String authorURL = "/volumes?q=inauthor:\"" + author + "\""; // Wrap in quotes
         return webClient.get()
@@ -58,7 +57,6 @@ public class AuthorService {
             }
         }
         return bookDTOS;
-
     }
 
     private List<String> extractAuthors(String ApiResponse, String authorName){

@@ -12,15 +12,12 @@ import java.util.List;
 @RequestMapping("library/books")
 public class BookController {
     private BookService bookService;
-
     public BookController(BookService bookService) {
         this.bookService = bookService; //dependency injection
     }
 
-
     @GetMapping("/{title}")
     public BookPagination searchBooks(@PathVariable String title) {
-
         List<BookDTO> books = bookService.getBooksByTitle(title);
         return new BookPagination(books.size(), books);
     }

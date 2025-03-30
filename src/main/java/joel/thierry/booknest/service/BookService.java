@@ -28,7 +28,6 @@ public class BookService {
         this.jacksonObjectMapper = jacksonObjectMapper;
     }
 
-
     public List<BookDTO> getBooksByTitle(String title) {
         String titleURL = "/volumes?q=intitle:" + title; // Wrap title in quotes
         List<BookDTO> bookDTO = new ArrayList<>();

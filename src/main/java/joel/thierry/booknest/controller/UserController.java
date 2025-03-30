@@ -1,7 +1,8 @@
 package joel.thierry.booknest.controller;
 
 import joel.thierry.booknest.dto.BookDTO;
-import joel.thierry.booknest.model.Book;
+import joel.thierry.booknest.dto.UserDTO;
+import joel.thierry.booknest.mapper.Mapper;
 import joel.thierry.booknest.model.User;
 import joel.thierry.booknest.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,10 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    public UserController(UserService userService) {
+    private final Mapper mapper;
+    public UserController(UserService userService, Mapper mapper) {
         this.userService = userService;
+        this.mapper = mapper;
     }
 
     @PostMapping("/register")
@@ -24,14 +27,47 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<User> getUser(@PathVariable String username) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
         Optional<User> user = userService.getUserByUsername(username);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        UserDTO userDTO = mapper.convertToUserDTO(user.get());
+        return ResponseEntity.ok(userDTO);
+    }
+    @GetMapping("/{username}/favorite-books")
+    public List<BookDTO> getFavoriteBooks(@PathVariable String username) {
+        try {
+            return userService.getFavoriteBook(username);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @GetMapping("/{username}/wishlist")
+    public List<BookDTO> getWishlist(@PathVariable String username) {
+        try {
+            return userService.getWishlist(username);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @GetMapping("/{username}/currently-reading")
+    public List<BookDTO> getCurrentlyReading(@PathVariable String username) {
+        try {
+            return userService.getCurrentlyReading(username);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @GetMapping("/{username}/done-reading")
+    public List<BookDTO> getDoneReading(@PathVariable String username) {
+        try {
+            return userService.getDoneReading(username);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @PutMapping("/{username}/favorite-books")
-    public ResponseEntity<User> addFavoriteBook(@PathVariable String username, @RequestParam String bookId) {
-        try{
+    @PutMapping("/{username}/favorite-books/{bookId}")
+    public ResponseEntity<User> addFavoriteBook(@PathVariable String username, @PathVariable String bookId) {
+        try {
             User updatedUser = userService.addFavoriteBook(username, bookId);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception e) {
@@ -39,8 +75,8 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{username}/favorite-authors")
-    public ResponseEntity<User> addFavoriteAuthor(@PathVariable String username, @RequestParam String authorName) {
+    @PutMapping("/{username}/favorite-authors/{authorName}")
+    public ResponseEntity<User> addFavoriteAuthor(@PathVariable String username, @PathVariable String authorName) {
         try{
             User updatedUser = userService.addFavoriteAuthor(username, authorName);
             return ResponseEntity.ok(updatedUser);
@@ -48,6 +84,36 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/{username}/wishlist/{bookId}")
+    public ResponseEntity<User> addWishlist(@PathVariable String username, @PathVariable String bookId) {
+        try {
+            User updatedUser = userService.addToWishlist(username, bookId);
+            return ResponseEntity.ok(updatedUser);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{username}/currently-reading/{bookId}")
+    public ResponseEntity<User> addCurrentlyReading(@PathVariable String username, @PathVariable String bookId) {
+        try {
+            User updatedUser = userService.addToCurrentlyReading(username, bookId);
+            return ResponseEntity.ok(updatedUser);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{username}/done-reading/{bookId}")
+    public ResponseEntity<User> addDoneReading(@PathVariable String username, @PathVariable String bookId) {
+        try {
+            User updatedUser = userService.addToDoneReading(username, bookId);
+            return ResponseEntity.ok(updatedUser);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @DeleteMapping("/{username}/favorite-books/{bookId}")
     public ResponseEntity<User> removeFavoriteBook(@PathVariable String username, @PathVariable String bookId) {
@@ -68,17 +134,32 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-    @GetMapping("/{username}/favorite-books/get")
-    public List<BookDTO> getFavoriteBook(@PathVariable String username) {
+    @DeleteMapping("/{username}/wishlist/{bookId}")
+    public ResponseEntity<User> removeWishlist(@PathVariable String username, @PathVariable String bookId) {
         try {
-                List<BookDTO> books = userService.getFavoriteBook(username);
-            return books;
+            User updatedUser = userService.removeWishlist(username, bookId);
+            return ResponseEntity.ok(updatedUser);
         }catch (Exception e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.notFound().build();
         }
     }
-
+    @DeleteMapping("/{username}/currently-reading/{bookId}")
+    public ResponseEntity<User> removeCurrentlyreading(@PathVariable String username, @PathVariable String bookId) {
+        try {
+            User updatedUser = userService.removeCurrentlyReading(username, bookId);
+            return ResponseEntity.ok(updatedUser);
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping("/{username}/done-reading/{bookId}")
+    public ResponseEntity<User> removeDonereading(@PathVariable String username, @PathVariable String bookId) {
+        try {
+            User updatedUser = userService.removeDoneReading(username, bookId);
+            return ResponseEntity.ok(updatedUser);
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
