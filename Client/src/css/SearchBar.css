@@ -1,0 +1,38 @@
+.search-container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .search-input {
+    width: 600px; /* Initial width of the search bar */
+    padding: 12px 24px;
+    font-size: 25px;
+    line-height: 18px;
+    border: 1px solid #f1eeee; 
+    border-radius: 50px; 
+    background-color: transparent;
+    color: #e9e9df;
+    outline: none;
+    transition: all 0.3s ease; 
+    text-align: left;
+  }
+  
+  .search-input::placeholder {
+    color: rgba(239, 239, 233, 0.8);
+    letter-spacing: 1.5px;
+    text-align: left;
+  }
+  
+  /* Hover and Focus Effects */
+  .search-input:hover,
+  .search-input:focus {
+    width: 700px; /* Keep the width the same */
+    border-radius: 0; /* Remove rounded corners */
+    border-top: none; /* Remove the top border */
+    border-left: none; /* Remove the left border */
+    border-right: none; /* Remove the right border */
+    border-bottom: 1px solid#f1eeee; /* Darker, thicker bottom border */
+    background-color: transparent;
+    padding: 12px 20px; /* Adjust padding when focused */
+  }
